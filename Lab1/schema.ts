@@ -30,25 +30,27 @@ class Trip {
 
   constructor(
     public trip_id: number,
+    public car_id: Car,
+    public user_id: User,
     public start_time: Date,
     public end_time: Date,
-    cost: number
   ) {
-    this.cost = cost;
     const diffMs = this.end_time.getTime() - this.start_time.getTime();
     const diffMins = Math.floor(diffMs / (1000 * 60));
     const hours = Math.floor(diffMins / 60);
     const minutes = diffMins % 60;
-
+    
     this.duration = `${hours}h ${minutes}m`;
+
+    this.cost = this.car_id.price * diffMins;
   }
 }
 
 class Booking {
   constructor(
     public book_id: number,
-    public user_id: User["user_id"],
-    public car_id: Car["car_id"],
+    public user_id: User,
+    public car_id: Car,
     public status: string
   ) {}
 }
@@ -61,6 +63,6 @@ class Payment {
     public type: string,
     public method: string,
     public status: string,
-    public trip_id: Trip["trip_id"]
+    public trip_id: Trip
   ) {}
 }
