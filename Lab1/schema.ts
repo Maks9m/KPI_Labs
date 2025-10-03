@@ -35,17 +35,17 @@ class Trip {
     public end_time: Date,
     public start_location: CarLocation,
     public end_location: CarLocation,
-    public car: Car,
-    public user: User,
+    public car_id: Car,
+    public car_price: Car['price'],
+    public user_id: User,
   ) {
-    const diffMs = this.end_time.getTime() - this.start_time.getTime();
-    const diffMins = Math.floor(diffMs / (1000 * 60));
-    const hours = Math.floor(diffMins / 60);
-    const minutes = diffMins % 60;
-    
-    this.duration = `${hours}h ${minutes}m`;
+    const milliseconds = this.end_time.getTime() - this.start_time.getTime();
+    const minutes = Math.ceil(milliseconds / (1000 * 60));
+    const hours = Math.ceil(minutes / 60);
 
-    this.cost = this.car.price * diffMins;
+    this.duration = `${hours}h`;
+
+    this.cost = this.car_price * hours;
   }
 }
 

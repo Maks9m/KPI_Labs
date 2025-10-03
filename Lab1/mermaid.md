@@ -25,6 +25,7 @@ string address
 TRIP {
 int trip_id PK
 int car_id FK
+int car_price FK
 int user_id FK
 datetime start_time
 datetime end_time
@@ -55,6 +56,7 @@ int trip_id FK
     USER||--o{PAYMENT:"makes"
     TRIP||--|{PAYMENT:"has"
     TRIP}o--||CAR:"uses"
+    TRIP}|--||CAR:"takes price of"
     LOCATION||--o{TRIP:"starts_in"
     LOCATION||--o{TRIP:"ends_in"
     LOCATION||--o{CAR:"is_in"
@@ -87,6 +89,7 @@ string address
 TRIP {
 int trip_id PK
 int car_id FK
+int car_price FK
 int user_id FK
 datetime start_time
 datetime end_time
@@ -117,6 +120,7 @@ int trip_id FK
     USER||--o{PAYMENT:"makes"
     TRIP||--|{PAYMENT:"has"
     TRIP}o--||CAR:"uses"
+    TRIP}|--||CAR:"takes price of"
     LOCATION||--o{TRIP:"starts_in"
     LOCATION||--o{TRIP:"ends_in"
     LOCATION||--o{CAR:"is_in"
