@@ -21,8 +21,46 @@ class Car {
 }
 
 class CarLocation {
+  constructor(public location_id: number, public address: string) {}
+}
+
+class Trip {
+  public duration: string;
+  public cost: number;
+
   constructor(
-    public location_id: number, 
-    public address: string
+    public trip_id: number,
+    public start_time: Date,
+    public end_time: Date,
+    cost: number
+  ) {
+    this.cost = cost;
+    const diffMs = this.end_time.getTime() - this.start_time.getTime();
+    const diffMins = Math.floor(diffMs / (1000 * 60));
+    const hours = Math.floor(diffMins / 60);
+    const minutes = diffMins % 60;
+
+    this.duration = `${hours}h ${minutes}m`;
+  }
+}
+
+class Booking {
+  constructor(
+    public book_id: number,
+    public user_id: User["user_id"],
+    public car_id: Car["car_id"],
+    public status: string
+  ) {}
+}
+
+class Payment {
+  constructor(
+    public payment_id: number,
+    public date: Date,
+    public amount: number,
+    public type: string,
+    public method: string,
+    public status: string,
+    public trip_id: Trip["trip_id"]
   ) {}
 }
