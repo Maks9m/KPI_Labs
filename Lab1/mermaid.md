@@ -120,7 +120,6 @@ string trip_id FK
     USER||--o{PAYMENT:"makes"
     TRIP||--|{PAYMENT:"has"
     TRIP}o--||CAR:"uses"
-    TRIP}|--||CAR:"takes price of"
     LOCATION||--o{TRIP:"starts_in"
     LOCATION||--o{TRIP:"ends_in"
     LOCATION||--o{CAR:"is_in"

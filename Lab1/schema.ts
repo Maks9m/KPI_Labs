@@ -36,7 +36,6 @@ class Trip {
     public start_location: CarLocation["location_id"],
     public end_location: CarLocation["location_id"],
     public car_id: Car["car_id"],
-    public car_price: Car["price"],
     public user_id: User["user_id"]
   ) {
     const milliseconds = this.end_time.getTime() - this.start_time.getTime();
@@ -44,8 +43,7 @@ class Trip {
     const hours = Math.ceil(minutes / 60);
 
     this.duration = `${hours}h`;
-
-    this.cost = this.car_price * hours;
+    this.cost = hours * 10; // Counts cost using price from Car class
   }
 }
 
