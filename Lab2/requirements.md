@@ -9,13 +9,13 @@
 
 ### Subscription & Billing
 
-- **FR-3** Free tier with ads; Premium tier **removes ads** and unlocks downloads/high quality.
+- **FR-3** Free tier with ads; Premium tier **removes ads** and unlocks **downloads**/high quality.
 - **FR-4** **Subscribe**, **update plan** (individual/family/student), **cancel**; trials and grace periods.
 
 ### Content Ingestion & Publishing (Artist)
 
 - **FR-5** Artists **publish music** (single/album) and **publish albums**/**publish episodes**/(podcasts).
-- **FR-6** Release scheduling, preview, and takedown.
+- **FR-6** Release **scheduling**, preview, and takedown.
 
 ### Catalog & Search
 
@@ -26,7 +26,7 @@
 
 - **FR-9** **Play a track** with play/pause/seek/next/prev, shuffle, repeat, crossfade, volume.
 - **FR-10** **Create/manage queue** (add next, add to end, reorder, remove).
-- **FR-11** Autoplay next recommendations when queue ends.
+- **FR-11** **Autoplay** next recommendations when queue ends.
 
 ### Library & Playlists
 
@@ -59,14 +59,9 @@
 - **FR-23** Artists **view stats**: **view songs’ stats** (streams, saves, playlist adds, skips, completion).
 - **FR-24** **View audience stats** (geo, demographics where permitted, sources); time ranges; CSV export.
 
-### Moderation & Safety
-
-- **FR-25** Moderation pipeline for uploads (audio/image/metadata).
-- **FR-26** Parental/explicit-content filters.
-
 ### Notifications
 
-- **FR-27** Push/email notifications with granular settings (releases, follows, playlists, merch/events, billing).
+- **FR-25** Push/email notifications with granular settings (releases, follows, playlists, merch/events, billing).
 
 ## Non-Functional Requirements (NFR)
 
