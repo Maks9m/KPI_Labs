@@ -9,7 +9,7 @@
 
 ### Subscription & Billing
 
-- **FR-3** Free tier with ads; Premium tier **removes ads** and unlocks **downloads**/high quality.
+- **FR-3** Free tier with ads; Premium tier **removes ads** and unlocks **downloads**/**unlimited skips**.
 - **FR-4** **Subscribe**, **update plan** (individual/family/student), **cancel**; trials and grace periods.
 
 ### Content Ingestion & Publishing (Artist)
