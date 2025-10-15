@@ -31,7 +31,7 @@
 ### Library & Playlists
 
 - **FR-12** **Add to library** (tracks, albums, artists, playlists, podcasts).
-- **FR-13** **Create playlists**, add/remove/reorder tracks; set cover/title/description; collaborative playlists (optional).
+- **FR-13** **Create playlists**, listener can create playlists.
 - **FR-14** **Add tracks to playlists** from search/now playing/library.
 
 ### Downloads & Offline (Premium)
