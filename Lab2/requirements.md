@@ -9,7 +9,7 @@
 
 ### Subscription & Billing
 
-- **FR-3** Free tier with ads; Premium tier **removes ads** and unlocks **downloads**/**unlimited skips**.
+- **FR-3** Free tier with ads; Premium tier **removes ads** and unlocks **downloads**/high quality.
 - **FR-4** **Subscribe**, **update plan** (individual/family/student), **cancel**; trials and grace periods.
 
 ### Content Ingestion & Publishing (Artist)
@@ -30,38 +30,33 @@
 
 ### Library & Playlists
 
-- **FR-12** **Add to library** (tracks, albums, artists, playlists, podcasts).
-- **FR-13** **Create playlists**, listener can create playlists.
-- **FR-14** **Add tracks to playlists** from search/now playing/library.
+- **FR-12** **Create playlists**, listener can create playlists.
+- **FR-13** **Add tracks to playlists** from search/now playing/library.
 
 ### Downloads & Offline (Premium)
 
-- **FR-15** **Download tracks/albums/playlists/podcasts** for offline; per-device management.
+- **FR-14** **Download tracks/albums/playlists/podcasts** for offline; per-device management.
 
 ### Social, Follow & Sharing
 
-- **FR-16** **Follow** artists and listeners; follower counts.
-- **FR-17** **Share** tracks/albums/playlists/episodes via links/story cards.
+- **FR-15** **Follow** artists and listeners; follower counts.
+- **FR-16** **Share** tracks/albums/playlists/episodes via links/story cards.
 
 ### Premium Experience (Ads control)
 
-- **FR-18** Free tier hears **audio ads**/sees display ads; Premium users **listen without ads**.
+- **FR-17** Free tier hears **audio ads**/sees display ads; Premium users **listen without ads**.
 
 ### Merch & Events
 
-- **FR-19** Artists **add merch** (title, images, price, inventory, link or checkout).
-- **FR-20** Users **buy merch** (in-app checkout or link-out).
-- **FR-21** Artists **add events** (date/time/venue/ticket link).
-- **FR-22** Listeners **enroll for events** / save to calendar / reminders.
+- **FR-18** Artists **add merch** (title, images, price, inventory, link or checkout).
+- **FR-19** Users **buy merch** (in-app checkout or link-out).
+- **FR-20** Artists **add events** (date/time/venue/ticket link).
+- **FR-21** Listeners **enroll for events** / save to calendar / reminders.
 
 ### Analytics & Stats (Artist)
 
-- **FR-23** Artists **view stats**: **view songs’ stats** (streams, saves, playlist adds, skips, completion).
-- **FR-24** **View audience stats** (geo, demographics where permitted, sources); time ranges; CSV export.
-
-### Notifications
-
-- **FR-25** Push/email notifications with granular settings (releases, follows, playlists, merch/events, billing).
+- **FR-22** Artists **view stats**: **view songs’ stats** (streams, saves, playlist adds, skips, completion).
+- **FR-23** **View audience stats** (geo, demographics where permitted, sources); time ranges; CSV export.
 
 ## Non-Functional Requirements (NFR)
 
