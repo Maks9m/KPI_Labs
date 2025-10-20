@@ -1,0 +1,72 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam usecase {
+  BackgroundColor White
+  BorderColor Black
+  ArrowColor Black
+}
+
+actor Listener
+actor "Premium listener" as Premium
+actor Artist
+
+' --- Listener use cases ---
+Listener --> (Spotify log in/sign up via email + pass)
+Listener --> (view users profiles)
+Listener --> (edit profile information)
+Listener --> (search tracks)
+Listener --> (Browse home/picks for you/recommendations)
+Listener --> (play a track playback)
+Listener --> (create playlists)
+Listener --> (add tracks to playlists)
+Listener --> (follow)
+Listener --> (unfollow)
+Listener --> (share profile)
+Listener --> (share track/album)
+Listener --> (buy merch)
+Listener --> (enroll for events)
+Listener --> (manage subscription)
+
+' --- Premium listener use cases ---
+Premium --> (Create/manage queue)
+Premium --> (download tracks)
+Premium --> (listen to music without ads)
+Premium --> (unlimited skips)
+Premium -|> Listener
+
+' --- Artist use cases ---
+Artist --> (Spotify log in/sign up via email + pass)
+Artist --> (edit profile information)
+Artist --> (add merch)
+Artist --> (link merch shop service)
+Artist --> (add events)
+Artist --> (link event enrolment service)
+Artist --> (publish music)
+Artist --> (view stats)
+Artist --> (schedule music release date)
+
+' --- Extensions ---
+(publish music) --|> (publish single) : <<extends>>
+(publish music) --|> (publish album) : <<extends>>
+(publish music) --|> (publish episode) : <<extends>>
+(view stats) --|> (view songs' stats) : <<extends>>
+(view stats) --|> (view audience stats) : <<extends>>
+(follow) --|> (follow artist) : <<extends>>
+(follow) --|> (follow listener) : <<extends>>
+(Share link to) --|> (share track/album) : <<extends>>
+(Share link to) --|> (share profile) : <<extends>>
+(subscribe to premium) --|> (manage subscription) : <<extends>>
+(update subscription) --|> (manage subscription) : <<extends>>
+(cancel subscription) --|> (manage subscription) : <<extends>>
+
+' --- Use relationships ---
+(publish music) ..> (schedule music release date) : <<use>>
+(add merch) ..> (buy merch) : <<use>>
+(add events) ..> (enroll for events) : <<use>>
+(create playlists) ..> (add tracks to playlists) : <<use>>
+(link merch shop service) ..> (buy merch) : <<use>>
+(link event enrolment service) ..> (enroll for events) : <<use>>
+(view users profiles) ..> (follow) : <<use>>
+
+@enduml
