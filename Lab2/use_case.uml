@@ -26,16 +26,14 @@ Listener --> (share profile)
 Listener --> (share track/album)
 Listener --> (buy merch)
 Listener --> (enroll for events)
-Listener --> (subscribe to premium)
-Listener --> (update subscription)
-Listener --> (cancel subscription)
+Listener --> (manage subscription)
 
 ' --- Premium listener use cases ---
 Premium --> (Create/manage queue)
 Premium --> (download tracks)
 Premium --> (listen to music without ads)
 Premium --> (unlimited skips)
-Premium --> (subscribe to premium)
+Premium -|> Listener
 
 ' --- Artist use cases ---
 Artist --> (Spotify log in/sign up via email + pass)
@@ -58,11 +56,12 @@ Artist --> (schedule music release date)
 (follow) --|> (follow listener) : <<extends>>
 (Share link to) --|> (share track/album) : <<extends>>
 (Share link to) --|> (share profile) : <<extends>>
-(subscribe to premium) --|> (update subscription) : <<extends>>
+(subscribe to premium) --|> (manage subscription) : <<extends>>
+(update subscription) --|> (manage subscription) : <<extends>>
+(cancel subscription) --|> (manage subscription) : <<extends>>
 
 ' --- Use relationships ---
 (publish music) ..> (schedule music release date) : <<use>>
-(subscribe to premium) ..> (cancel subscription) : <<use>>
 (add merch) ..> (buy merch) : <<use>>
 (add events) ..> (enroll for events) : <<use>>
 (create playlists) ..> (add tracks to playlists) : <<use>>
