@@ -1,5 +1,6 @@
 # Listening to a track process
 
+```
 sequenceDiagram
     actor Listener
     participant UI
@@ -12,22 +13,26 @@ sequenceDiagram
     UI->>+Authorization: Check access
     Authorization-->>-UI: Access granted
 
-    UI->>+Playback Manager: Request playback(trackID)
-    Playback Manager->>+Cache: Get track(trackID)
+    UI->>+Playback Manager: Request playback
+    Playback Manager->>+Cache: Get track
 
-    alt Cache Hit
-        Cache-->>Playback Manager: Return track data
-    else Cache Miss
+    alt Cache found
+        Cache-->>-Playback Manager: Return track data
+    else Cache not found
         Cache-->>-Playback Manager: Not found
-        Playback Manager->>+DB: Fetch track(trackID)
+        Playback Manager->>+DB: Fetch track
+        
         DB-->>-Playback Manager: Return track data
-        Playback Manager->>Cache: Store track(trackID, data)
+        Playback Manager->>Cache: Store track
     end
 
     Playback Manager-->>-UI: Stream track data
+    
     UI-->>-Listener: Track playing
+```
 
 ```mermaid
+
 sequenceDiagram
     actor Listener
     participant UI
@@ -40,18 +45,22 @@ sequenceDiagram
     UI->>+Authorization: Check access
     Authorization-->>-UI: Access granted
 
-    UI->>+Playback Manager: Request playback(trackID)
-    Playback Manager->>+Cache: Get track(trackID)
+    UI->>+Playback Manager: Request playback
+    Playback Manager->>+Cache: Get track
 
-    alt Cache Hit
+    alt Cache found
         Cache-->>Playback Manager: Return track data
-    else Cache Miss
+    else Cache not found
         Cache-->>-Playback Manager: Not found
-        Playback Manager->>+DB: Fetch track(trackID)
+        Playback Manager->>+DB: Fetch track
+        
         DB-->>-Playback Manager: Return track data
-        Playback Manager->>Cache: Store track(trackID, data)
+        Playback Manager->>Cache: Store track
     end
 
     Playback Manager-->>-UI: Stream track data
+    
     UI-->>-Listener: Track playing
-    ```
+
+
+```
