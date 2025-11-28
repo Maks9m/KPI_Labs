@@ -1,0 +1,60 @@
+@startuml
+title Створення треку (Activity Diagram)
+
+start
+
+partition "Artist" {
+  if (Track isn't valid) then (yes)
+    :Send release track data;
+    :Track data;
+  endif
+}
+
+partition "UI" {
+  :Click "Check track data";
+  :Track data;
+}
+
+partition "DB" {
+  :Send Check List for track validation;
+  :Check List;
+}
+
+partition "Track Validation Service" {
+  :Get check list for track validation;
+  :Validate data using checklist;
+  
+  if (Validation Success) then (yes)
+    :Track data is valid;
+    -> Send_To_Creation_Service;
+    
+  else (no / Track isn't valid)
+    :Track isn't valid;
+    :Error List;
+    
+    partition "UI" {
+      :Display Error List;
+      end
+    }
+  endif
+}
+
+partition "Track Creation Service" {
+  **label L1**
+  **L1 <- Send_To_Creation_Service;**
+  :Create new track;
+  :Add new track to DB;
+  :Track is successfully saved;
+}
+
+partition "DB" {
+  :Save new track to DB;
+  :Created track;
+}
+
+partition "UI" {
+  :Display Success message;
+  end
+}
+
+@enduml
