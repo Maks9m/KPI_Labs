@@ -1,0 +1,206 @@
+@startuml
+left to right direction
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+'========================
+' REST API boundary
+'========================
+package "Rest API" as REST {
+
+[Client UI\n(Mobile/Web)] as ClientUI
+[Main Router] as MainRouter
+[API Gateway] as APIGateway
+
+interface "REST API" as I_REST
+ClientUI - I_REST
+I_REST - MainRouter
+I_REST - APIGateway
+
+interface "Modules\nEndPoints" as I_ModulesEP
+interface "Modules\nAPI's" as I_ModulesAPI
+
+MainRouter - I_ModulesEP
+APIGateway - I_ModulesAPI
+
+'========================
+' Modules package
+'========================
+package "Modules" as MOD {
+
+    '------------ Auth Module ------------
+    package "Auth Module" as P_AUTH {
+      interface "EndPoints" as I_AuthEP
+      interface "Auth Api" as I_AuthAPI
+      interface "Users" as I_Users
+
+      [Auth Router] as AuthRouter
+      [Auth Service] as AuthService
+      [Auth Schema] as AuthSchema
+      [Auth Repository] as AuthRepo
+
+      I_AuthEP - AuthRouter
+      I_AuthAPI - AuthRouter
+
+      AuthRouter --> AuthService
+      AuthService --> AuthSchema
+      AuthService --> AuthRepo
+
+      ' Auth depends on Users (User service contract)
+      AuthService ..> I_Users : uses
+    }
+
+    '------------ User & Social Module ------------
+    package "User & Social\nModule" as P_USER {
+      interface "EndPoints" as I_UserEP
+      interface "User Api" as I_UserAPI
+      interface "Auth Api" as I_UserNeedsAuthAPI
+      interface "Users" as I_Users_Provided
+
+      [User Router] as UserRouter
+      [User Service] as UserService
+      [User Schema] as UserSchema
+      [User Repository] as UserRepo
+
+      I_UserEP - UserRouter
+      I_UserAPI - UserRouter
+      I_UserNeedsAuthAPI - UserRouter
+
+      ' Provided port for other modules
+      I_Users_Provided - UserService
+
+      UserRouter --> UserService
+      UserService --> UserSchema
+      UserService --> UserRepo
+    }
+
+    '------------ Track Management Service ------------
+    package "Track Management\nService" as P_TRACK {
+      interface "TM EndPoints" as I_TMEP
+      interface "Track Catalog\nApi" as I_TrackCatalog
+
+      [Track Router] as TrackRouter
+      [Track Service] as TrackService
+      [Track Schema] as TrackSchema
+      [Track Repository] as TrackRepo
+
+      I_TMEP - TrackRouter
+      I_TrackCatalog - TrackService
+
+      TrackRouter --> TrackService
+      TrackService --> TrackSchema
+      TrackService --> TrackRepo
+    }
+
+    '------------ Playback & Streaming Service ------------
+    package "Playback &\nStreaming Service" as P_PLAY {
+      interface "Playback\nEndPoints" as I_PlayEP
+      interface "Access\nCheck" as I_AccessCheck
+      interface "Track Catalog\nApi" as I_PlayNeedsTrackCatalog
+
+      [Playback Router] as PlaybackRouter
+      [Playback Service] as PlaybackService
+      [Playback Schema] as PlaybackSchema
+      [Session Repository] as SessionRepo
+
+      I_PlayEP - PlaybackRouter
+
+      PlaybackRouter --> PlaybackService
+      PlaybackService --> PlaybackSchema
+      PlaybackService --> SessionRepo
+
+      ' Playback depends on access + track catalog
+      PlaybackService ..> I_AccessCheck : entitlement
+      PlaybackService ..> I_PlayNeedsTrackCatalog : track lookup
+    }
+
+    '------------ Subscription Service ------------
+    package "Subscription Service" as P_SUB {
+      interface "Subscription\nApi" as I_SubAPI
+      interface "Access\nCheck" as I_SubProvidesAccess
+
+      [Subscription Router] as SubRouter
+      [Subscription Service] as SubService
+      [Subscription Schema] as SubSchema
+      [Subscription Repository] as SubRepo
+
+      I_SubAPI - SubRouter
+      I_SubProvidesAccess - SubService
+
+      SubRouter --> SubService
+      SubService --> SubSchema
+      SubService --> SubRepo
+
+      ' Subscription may need Users data
+      SubService ..> I_Users_Provided : uses
+    }
+
+    '========================
+    ' Wiring "Modules EndPoints" / "Modules API's"
+    '========================
+    I_ModulesEP ..> I_AuthEP
+    I_ModulesEP ..> I_UserEP
+    I_ModulesEP ..> I_TMEP
+    I_ModulesEP ..> I_PlayEP
+
+    I_ModulesAPI ..> I_AuthAPI
+    I_ModulesAPI ..> I_UserAPI
+    I_ModulesAPI ..> I_SubAPI
+
+    '========================
+    ' Cross-module contracts
+    '========================
+    ' Users contract: User provides, Auth/Subscription use
+    I_Users_Provided ..|> I_Users
+
+    ' Track Catalog contract: Track provides, Playback uses
+    I_TrackCatalog ..|> I_PlayNeedsTrackCatalog
+
+    ' Access Check contract: Subscription provides, Playback uses
+    I_SubProvidesAccess ..|> I_AccessCheck
+
+}
+}
+
+'========================
+' Infrastructure / External systems
+'========================
+component "3rd Party Provider" as ThirdParty
+component "DB Connection\nPool" as DBPool
+component "Cloud Storage\nAdapter" as CloudAdapter
+component "Redis Client\nConnection Pool" as RedisPool
+component "Payment Adapter" as PaymentAdapter
+
+cloud "Identity Provider (OAuth/Google)" as OAuth
+database "Main Database\n(PostgreSQL)" as MainDB
+cloud "Cloud Storage (AWS)" as AWS
+database "Cache (Redis)" as RedisDB
+cloud "Payment Provider (PayPal)" as PayPal
+
+' External Auth chain
+AuthRepo --> ThirdParty
+ThirdParty --> OAuth : External\nAuth
+
+' DB access chain (all repositories -> pool -> db)
+AuthRepo --> DBPool
+UserRepo --> DBPool
+TrackRepo --> DBPool
+SessionRepo --> DBPool
+SubRepo --> DBPool
+DBPool --> MainDB : DATA\naccess
+
+' Cloud storage chain (track + playback/session -> adapter -> AWS)
+TrackRepo --> CloudAdapter
+SessionRepo --> CloudAdapter
+CloudAdapter --> AWS : Upload/Get\nStream
+
+' Redis cache chain (playback session repo -> redis pool -> redis)
+SessionRepo --> RedisPool
+RedisPool --> RedisDB : Fast\nAccess
+
+' Payments chain (subscription repo -> adapter -> paypal)
+SubRepo --> PaymentAdapter
+PaymentAdapter --> PayPal : Process
+
+@enduml
